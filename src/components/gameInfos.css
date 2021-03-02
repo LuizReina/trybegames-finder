@@ -1,0 +1,43 @@
+.top-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.game-details-container {
+  width: 100%;
+}
+
+.infos-container {
+  display: flex;
+  justify-content: center;
+}
+
+.game-infos {
+  align-items: center;
+  border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+}
+
+.game-thumb {
+  align-items: center;
+  border-left: 1px solid black;
+  display: flex;
+  justify-content: center;
+  width: 35%;
+}
+
+.thumb-detailed {
+  height: 150px;
+  width: 480px;
+}
+
+.deals-container {
+  display: flex;
+  justify-content: center;
+  width: 70%;
+}

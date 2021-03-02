@@ -1,0 +1,49 @@
+.deal-card {
+  border: 1px solid black;
+  width: 20%;
+}
+
+.deal-card-name-img {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.deal-card-name-img img {
+  margin: 5px 0px;
+  width: 180px;
+}
+
+.deal-info {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.deal-prices {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 55%;
+}
+
+.deal-savings {
+  text-align: center;
+  width: 25%;
+}
+
+.deal-sale-price {
+  color: orange;
+  font-weight: 700;
+}
+
+.deal-normal-price {
+  text-decoration: line-through;
+}
+
+a, a:hover, a:visited, a:active a:link {
+  color: black;
+  text-decoration: none;
+}

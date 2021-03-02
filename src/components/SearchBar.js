@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { fetchGames, getGamesDeals } from '../actions';
 
@@ -16,11 +17,11 @@ class SearchBar extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = ({ target: { name, value }}) => {
+  handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
-    })
-  };
+    });
+  }
 
   render() {
     const { title } = this.state;
@@ -45,7 +46,7 @@ class SearchBar extends React.Component {
               this.setState({
                 title: '',
               });
-            }}
+            } }
           >
             Search
           </button>
@@ -53,12 +54,12 @@ class SearchBar extends React.Component {
             className="search-button"
             disabled={ isDeals }
             type="button"
-            onClick={ () => { 
+            onClick={ () => {
               getGamesByDeals(title);
               this.setState({
                 title: '',
               });
-            }}
+            } }
           >
             Deals
           </button>
@@ -76,5 +77,11 @@ const mapDispatchToProps = (dispatch) => ({
   getGamesByTitle: (gameTitle) => dispatch(fetchGames(gameTitle)),
   getGamesByDeals: () => dispatch(getGamesDeals()),
 });
+
+SearchBar.propTypes = {
+  getGamesByTitle: PropTypes.func.isRequired,
+  getGamesByDeals: PropTypes.func.isRequired,
+  isDeals: PropTypes.bool.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

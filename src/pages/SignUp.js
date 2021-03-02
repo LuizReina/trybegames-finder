@@ -4,9 +4,9 @@ import SignUpForm from '../components/SignUpForm';
 class SignUp extends React.Component {
   render() {
     return (
-      <>
+      <main>
         <SignUpForm />
-      </>
+      </main>
     );
   }
 }

@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { createNewUserAction } from '../actions';
+
 import './loginForm.css';
 
 class SignUpForm extends React.Component {
@@ -26,7 +29,7 @@ class SignUpForm extends React.Component {
       [name]: value,
     }, () => {
       this.loginValidation();
-    })
+    });
   }
 
   handleSubmit(e) {
@@ -36,15 +39,16 @@ class SignUpForm extends React.Component {
     createNewUser({ name, email, password });
     this.setState({
       IsUserCreated: true,
-    })
-  };
+    });
+  }
 
   loginValidation() {
     const { email, password } = this.state;
     let isDisabled = true;
     const EMAIL_VALIDATION = /^[\w]+@([\w]+\.)+[\w]{2,4}$/gi;
     const MIN_PASSWORD_LENGTH = 6;
-    isDisabled = !(EMAIL_VALIDATION.test(email) && password.length >= MIN_PASSWORD_LENGTH);
+    isDisabled = !(EMAIL_VALIDATION.test(email)
+      && password.length >= MIN_PASSWORD_LENGTH);
     this.setState({ isDisabled });
   }
 
@@ -52,48 +56,48 @@ class SignUpForm extends React.Component {
     const { isDisabled, IsUserCreated } = this.state;
     return (
       <main className="main-container">
-          <fieldset className="login-container">
-            <legend className="login-container-legend">Welcome!</legend>
-            <section className="input-section">
-              <p>Name:</p>
-              <input
-                name="name"
-                className="login-input"
-                type="text"
-                onChange={ this.handleChange }
-              />
-            </section>
-            <section className="input-section">
-              <p>Email:</p>
-              <input
-                name="email"
-                className="login-input"
-                type="email"
-                onChange={ this.handleChange }
-              />
-            </section>
-            <section className="input-section">
-              <p>Password:</p>
-              <input
-                name="password"
-                className="login-input"
-                type="password"
-                onChange={ this.handleChange }
-              />
-            </section>
-            <button
-              type="submit"
-              onClick={ this.handleSubmit }
-              disabled={ isDisabled }
-            >
-              Sign Up
-            </button>
-          </fieldset>
-          {
-            IsUserCreated
+        <fieldset className="login-container">
+          <legend className="login-container-legend">Welcome!</legend>
+          <section className="input-section">
+            <p>Name:</p>
+            <input
+              name="name"
+              className="login-input"
+              type="text"
+              onChange={ this.handleChange }
+            />
+          </section>
+          <section className="input-section">
+            <p>Email:</p>
+            <input
+              name="email"
+              className="login-input"
+              type="email"
+              onChange={ this.handleChange }
+            />
+          </section>
+          <section className="input-section">
+            <p>Password:</p>
+            <input
+              name="password"
+              className="login-input"
+              type="password"
+              onChange={ this.handleChange }
+            />
+          </section>
+          <button
+            type="submit"
+            onClick={ this.handleSubmit }
+            disabled={ isDisabled }
+          >
+            Sign Up
+          </button>
+        </fieldset>
+        {
+          IsUserCreated
             ? <Redirect to="/" />
             : ''
-          }
+        }
       </main>
     );
   }
@@ -106,5 +110,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   createNewUser: (item) => dispatch(createNewUserAction(item)),
 });
+
+SignUpForm.propTypes = {
+  createNewUser: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

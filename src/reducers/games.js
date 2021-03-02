@@ -31,8 +31,8 @@ const INITIAL_STATE = {
   gamesList: [],
   error: {
     status: false,
-    message: ''
-  }
+    message: '',
+  },
 };
 
 const gamesReducer = (state = INITIAL_STATE, action) => {
@@ -48,13 +48,13 @@ const gamesReducer = (state = INITIAL_STATE, action) => {
       gamesList: action.payload,
       isFetchingGames: action.isFetchingGames,
       isDeals: action.isDeals,
-      error: { status: false, message: ''},
+      error: { status: false, message: '' },
     };
   case FETCH_STORE_FAILED:
     return {
       ...state,
       isFetchingGames: action.isFetchingGames,
-      error: { status: true, message: ''},
+      error: { status: true, message: '' },
     };
   case FETCH_GAMES_STARTED:
     return {
@@ -67,13 +67,13 @@ const gamesReducer = (state = INITIAL_STATE, action) => {
       gamesList: action.payload,
       isFetchingGames: action.isFetchingGames,
       isDeals: action.isDeals,
-      error: { status: false, message: ''},
+      error: { status: false, message: '' },
     };
   case FETCH_GAMES_FAILED:
     return {
       ...state,
       isFetchingGames: action.isFetchingGames,
-      error: { status: true, message: ''},
+      error: { status: true, message: '' },
     };
   case GET_GAME_DETAILS_STARTED:
     return {
@@ -85,13 +85,13 @@ const gamesReducer = (state = INITIAL_STATE, action) => {
       ...state,
       selectedGame: action.payload,
       isFetchingGames: action.isFetchingGames,
-      error: { status: false, message: ''},
+      error: { status: false, message: '' },
     };
   case GET_GAME_DETAILS_FAILED:
     return {
       ...state,
       isFetchingGames: action.isFetchingGames,
-      error: { status: true, message: ''},
+      error: { status: true, message: '' },
     };
   default:
     return state;

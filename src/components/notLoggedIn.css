@@ -1,0 +1,27 @@
+.first-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.not-logged-in-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 200px;
+  width: 20%;
+}
+
+.btn-sign-log {
+  display: flex;
+}
+
+.links {
+  margin: 10px;
+}
+
+.links:hover, .links:visited, .links:active {
+  text-shadow: 5px 5px 5px black;
+  color: red;
+}

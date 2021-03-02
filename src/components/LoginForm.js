@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { userLoginSuccessAction } from '../actions';
+
 import './loginForm.css';
 
 class LoginForm extends React.Component {
@@ -9,7 +12,6 @@ class LoginForm extends React.Component {
     super();
 
     this.state = {
-      localName: '',
       localEmail: '',
       localPassword: '',
       isDisabled: true,
@@ -19,77 +21,85 @@ class LoginForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.loginValidation = this.loginValidation.bind(this);
   }
-  
-  loginValidation = () => {
+
+  loginValidation() {
     const { localEmail, localPassword } = this.state;
     let isDisabled = true;
     const EMAIL_VALIDATION = /^[\w]+@([\w]+\.)+[\w]{2,4}$/gi;
     const MIN_PASSWORD_LENGTH = 6;
-    isDisabled = !(EMAIL_VALIDATION.test(localEmail) && localPassword.length >= MIN_PASSWORD_LENGTH);
+    isDisabled = !(EMAIL_VALIDATION.test(localEmail)
+      && localPassword.length >= MIN_PASSWORD_LENGTH);
     this.setState({ isDisabled });
   }
 
-  handleChange= ({ target: { name, value } }) => {
+  handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     }, () => {
       this.loginValidation();
-    })
+    });
   }
 
-  handleSubmit = () => {
+  handleSubmit() {
     const { localEmail, localPassword } = this.state;
     const { userLoginSuccess, usersRegisteredsList } = this.props;
     const userFilter = usersRegisteredsList
-      .filter((user) => user.email === localEmail && user.password === localPassword)
+      .filter((user) => user.email === localEmail && user.password === localPassword);
 
-    this.checkForRegisteredLogin()
-    ? userLoginSuccess({ name: userFilter[0].name, email: localEmail, password: localPassword })
-    : alert('User not found. Check your email or password and try again.');
-  };
+    if (this.checkForRegisteredLogin() === true) {
+      userLoginSuccess({
+        name: userFilter[0].name,
+        email: localEmail,
+        password: localPassword,
+      });
+    } else {
+      alert('Check your email or password and try again.');
+    }
+  }
 
-  checkForRegisteredLogin = () => {
+  checkForRegisteredLogin() {
     const { usersRegisteredsList } = this.props;
     const { localEmail, localPassword } = this.state;
 
     return usersRegisteredsList
       .some((user) => user.email === localEmail && user.password === localPassword);
-  };
+  }
 
   render() {
     const { isDisabled } = this.state;
     return (
       <main className="main-container">
-          <fieldset className="login-container">
-            <legend className="login-container-legend">Welcome!</legend>
-            <section className="input-section">
-              <p>Email:</p>
-              <input
-                name="localEmail"
-                className="login-input"
-                type="email"
-                onChange={ this.handleChange }
-              />
-            </section>
-            <section className="input-section">
-              <p>Password:</p>
-              <input
-                name="localPassword"
-                className="login-input"
-                type="password"
-                onChange={ this.handleChange }
-              />
-            </section>
-            <button
-              type="button"
-              onClick={ this.handleSubmit }
-              disabled={ isDisabled }
-            >
-              Login
-            </button>
-            <p>First time here?</p>
-            <Link to="/signup">Sign Up!</Link>
-          </fieldset>
+        <fieldset className="login-container">
+          <legend className="login-container-legend">Welcome!</legend>
+          <section className="input-section">
+            <p>Email:</p>
+            <input
+              name="localEmail"
+              className="login-input"
+              type="email"
+              onChange={ this.handleChange }
+            />
+          </section>
+          <section className="input-section">
+            <p>Password:</p>
+            <input
+              name="localPassword"
+              className="login-input"
+              type="password"
+              onChange={ this.handleChange }
+            />
+          </section>
+          <button
+            type="button"
+            onClick={ this.handleSubmit }
+            disabled={ isDisabled }
+          >
+            Login
+          </button>
+          <br />
+          <p>First time here?</p>
+          <Link to="/signup">Sign Up!</Link>
+        </fieldset>
       </main>
     );
   }
@@ -103,5 +113,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   userLoginSuccess: (item) => dispatch(userLoginSuccessAction(item)),
 });
+
+LoginForm.propTypes = {
+  userLoginSuccess: PropTypes.func.isRequired,
+  usersRegisteredsList: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
